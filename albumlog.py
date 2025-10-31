@@ -4,6 +4,7 @@
 
 import os
 import json
+import random
 
 DATA_FILE = 'album_log.json'            # stores album data
 
@@ -52,11 +53,31 @@ def add_album_helper(queue):
     save_to_file(queue)
 
     print("Album added!")
+    print("\n")
 
 def view_queue_helper(queue):
     """Handle displaying full queue of albums to user"""
+    if not queue:
+        print("Your queue is empty. Starting adding some albums!")
+        return
+
+    print("\n")
+    for index, album in enumerate(queue, 1):
+        print(f"{index}. {album['artist']} - {album['album']}")
+    print("\n")
 
 
+def get_recommendation(queue):
+    """Provide a random album (artist and title) from user's queue"""
+    if not queue:
+        print("Your queue is empty. Start adding some albums!")
+        return
+
+    suggested_album = random.choice(queue)
+
+    print("\n")
+    print(f"Here's a suggestion from your queue: \n*** {suggested_album['artist']} - {suggested_album['album']} ***")
+    print("\n")
 
 def main():
 
@@ -71,7 +92,7 @@ def main():
         elif choice == "2":
             view_queue_helper(album_queue)
         elif choice == "3":
-            print('GET RECOMMENDATION')
+            get_recommendation(album_queue)
         elif choice == "4":
             print('GET RECOMMENDATION')
         elif choice == "5":
